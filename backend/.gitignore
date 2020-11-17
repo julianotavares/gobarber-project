@@ -1,0 +1,15 @@
+.DS_*
+.idea/
+.vscode/
+node_modules/
+build/
+dist/
+temp/
+.env
+coverage
+ormconfig.json
+
+tmp/*
+!tmp/.gitkeep
+
+SPECS.md
