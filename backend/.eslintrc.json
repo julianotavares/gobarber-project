@@ -19,7 +19,7 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint",
+        "@typescript-eslint/eslint-plugin",
         "prettier"
     ],
     "rules": {
