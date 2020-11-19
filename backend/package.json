@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --ignore \"**/*.spec.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",
@@ -13,6 +14,9 @@
     "date-fns": "^2.16.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "express": "^4.17.1",
+    "highlight.js": "^10.4.0",
+    "pg": "^8.5.1",
+    "typeorm": "^0.2.29",
     "uuidv4": "^6.2.5"
   },
   "devDependencies": {
