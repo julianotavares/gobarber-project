@@ -4,9 +4,9 @@ import AuthenticateUserService from '../services/AuthenticateUserService'
 
 const sessionsRouter = Router();
 
-sessionsRouter.post('/', async (req, res) => {
+sessionsRouter.post('/', async (request, response) => {
 try{
-  const { email, password } = req.body
+  const { email, password } = request.body
 
   const authenticateUser = new AuthenticateUserService()
 
@@ -17,9 +17,9 @@ try{
 
   delete user.password
 
-  return res.json({ user, token })
+  return response.json({ user, token })
  } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return response.status(400).json({ error: error.message })
 
  }
 })
