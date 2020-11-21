@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --ignore \"**/*.spec.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "ts-node-dev src/shared/infra/http/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -40,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4",
     "prettier": "^2.1.2",
     "ts-node-dev": "^1.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.5"
   }
 }
