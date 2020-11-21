@@ -32,6 +32,7 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "no-useless-constructor": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
       "import/prefer-default-export": "off",
       "camelcase": "off",
@@ -39,6 +40,7 @@
       "@typescript-eslint/no-unused-vars": ["error", {
         "argsIgnorePattern": "_"
       }],
+      "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always"}],
       "import/extensions": [
         "error",
         "ignorePackages",
