@@ -31,6 +31,7 @@
     ],
     "rules": {
       "react-hooks/rules-of-hooks": "error",
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}],
       "react-hooks/exhaustive-deps": "warn",
       "no-useless-constructor": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -40,7 +41,11 @@
       "@typescript-eslint/no-unused-vars": ["error", {
         "argsIgnorePattern": "_"
       }],
-      "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always"}],
+      "@typescript-eslint/interface-name-prefix": ["error",
+        {
+          "prefixWithI": "always"
+          }
+        ],
       "import/extensions": [
         "error",
         "ignorePackages",
