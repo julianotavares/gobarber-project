@@ -99,7 +99,7 @@ This project is under the MIT license. See the [LICENSE](LICENSE.md) file for mo
 
 <div align="center">
 <a href="https://www.linkedin.com/in/julianotavares/">
- <img style="border-radius: 50%;" src="https://avatars3.githubusercontent.com/u/38234499?s=460&u=465cde5b2afdf65c5b43d8c0496bde2fa5a7dd1a&v=4" width="100px;" alt=""/>
+ <img style="border-radius: 50%" src="https://avatars3.githubusercontent.com/u/38234499?s=460&u=465cde5b2afdf65c5b43d8c0496bde2fa5a7dd1a&v=4" width="100px;" alt=""/>
  <br />
  <sub><b>Juliano Tavares</b></sub></a> <a href="https://www.linkedin.com/in/julianotavares/" title="Juliano Tavares">🚀</a>
 
