@@ -45,7 +45,7 @@
           "allowExpressions": true
         }
       ],
-
+      "no-restricted-globals": "off",
       "no-use-before-define": "off",
       "no-unused-vars": [
         "error",
