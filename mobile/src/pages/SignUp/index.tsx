@@ -30,7 +30,7 @@ const SignUp = React.FC = () => {
         <Container>
           <Image source={logoImg} />
         <View>
-          <Title>Crie sua conta</Title>
+          <Title>Criar uma conta</Title>
         </View>
         <Form ref={formRef} onSubmit={() => {}}>
           <Input name="user" icon="mail" placeholder="Usuário" />
