@@ -61,12 +61,13 @@ const handleSignUp = useCallback(
         return;
       }
 
-      Alert.alert('error', 'Erro no cadastro',
+      Alert.alert(
+      'Erro no cadastro',
       'Ocorreu um erro ao fazer cadastro, tente novamente'
       );
     }
   },
-  [],
+  [navigation],
 );
 
   return (
