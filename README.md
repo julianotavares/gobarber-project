@@ -7,7 +7,7 @@
   Full aplication GoBarber
 </h3>
 
-<p align="center">Neste repositório, você vai encontrar uma aplicação com pleta, desenvolvida durante o Bootcamp GoStack 11.0 da Rocketseat 🎓 (2020). <br/> A aplicação inclui o Backend, Frontend e Mobile com Node.JS, Express, React.JS, React Native e TypeScript.</p>
+<p align="center">Neste repositório, você vai encontrar uma aplicação com pleta, desenvolvida durante o<br/>Bootcamp GoStack 11.0 da Rocketseat 🎓 (2020). <br/> A aplicação inclui o Backend, Frontend e Mobile com Node.JS, Express, React.JS, React Native e TypeScript.</p>
 
 <p align="center">
   <a href="#coffee-back-end">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
