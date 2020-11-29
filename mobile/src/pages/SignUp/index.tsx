@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Form } from '@unform/mobile'
 import { FormHandles} from '@unform/core'
 import * as Yup from 'yup'
+import api from '../../services/api'
 
 import getValidationErrors from '../../utils/getValidationErrors'
 
@@ -47,7 +48,10 @@ const handleSignUp = useCallback(
 
       await api.post('/users', data);
 
-      // history.push('/');
+      Alert.alert(
+        'Cadastro realizado com sucesso!',
+        'Você já pode fazer login na sua conta'
+      )
 
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -56,8 +60,9 @@ const handleSignUp = useCallback(
 
         return;
       }
+
       Alert.alert('error', 'Erro no cadastro',
-      'Ocorreu um erro ao fazer cadastro, tente novamente.',
+      'Ocorreu um erro ao fazer cadastro, tente novamente'
       );
     }
   },
