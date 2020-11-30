@@ -73,10 +73,25 @@ yarn start
 ## :android: Mobile (WIP)
 Esta aplicação ainda está em desenvolvimento.
 <br>
-<br>
-<br>
-<br>
-<br>
+
+Após clonar o repositório, entre na pasta `mobile` e instale todas as dependências utilizando o comando:
+```bash
+# Digite o comando abaixo para instalar as dependências:
+yarn install
+```
+Depois, digite o comando abaixo para iniciar a aplicação:
+```bash
+# Irá iniciar o metrobundler
+yarn start
+```
+E para iniciar a aplicação no emulador:
+```bash
+# Para emulador Android:
+yarn android
+
+# Para emulador IOS:
+yarn ios
+```
 <br>
 ### 🛠 Tecnologias
 
