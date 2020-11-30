@@ -64,7 +64,6 @@ Depois, digite o comando abaixo para rodar a aplicação web:
 yarn start
 ```
 <br>
-<br>
 
 <h4 align="center"> 
 	🚧  Mobile 🚀 Em construção...  🚧
