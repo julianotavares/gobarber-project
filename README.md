@@ -65,7 +65,6 @@ yarn start
 ```
 <br>
 <br>
-<br>
 
 <h4 align="center"> 
 	🚧  Mobile 🚀 Em construção...  🚧
