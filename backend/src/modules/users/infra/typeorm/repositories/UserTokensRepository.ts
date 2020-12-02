@@ -6,37 +6,30 @@ import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import UserToken from '../entities/UserToken'
 
 class UserTokensRepository implements IUserTokensRepository {
-  private ormRepository: Repository<User>;
+  private ormRepository: Repository<UserToken>;
 
   constructor() {
-    this.ormRepository = getRepository(User);
+    this.ormRepository = getRepository(UserToken);
   }
 
-  public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id);
-
-    return user;
-  }
-
-  public async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({
-      where: { email },
+  public async findByToken(token: string): Promise<UserToken | undefined> {
+    const userToken = await this.ormRepository.findOne({
+      where: { token },
     });
 
-    return user;
+    return userToken;
   }
 
-  public async create(userData: ICreateUserDTO): Promise<User> {
-    const appointment = this.ormRepository.create(userData);
+  public async generate(user_id: string): Promise<UserToken> {
+    const userToken = this.ormRepository.create({
+      user_id,
+    })
 
-    await this.ormRepository.save(appointment);
+    await this.ormRepository.save(userToken)
 
-    return appointment;
+    return userToken
   }
 
-  public async save(user: User): Promise<User> {
-    return this.ormRepository.save(user);
-  }
 }
 
 export default UserTokensRepository;
