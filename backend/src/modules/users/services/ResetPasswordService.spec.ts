@@ -10,7 +10,7 @@ let resetPasswordService: ResetPasswordService;
 let fakeHashProvider: FakeHashProvider;
 
 
-describe('SendForgotPasswordEmail', () => {
+describe('ResetPasswordService', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository()
     fakeUserTokensRepository = new FakeUserTokensRepository()
@@ -43,6 +43,10 @@ describe('SendForgotPasswordEmail', () => {
 
     expect(generateHash).toHaveBeenCalledWith('123123')
     expect(updatedUser?.password).toBe('123123')
+  })
+
+  it('', async () => {
+
   })
 
 
