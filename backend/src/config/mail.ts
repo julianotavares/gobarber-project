@@ -14,8 +14,8 @@ export default {
 
   defaults: {
     from: {
-      email: 'juliano.tavares@gmail.com.br',
-      name: 'Juliano GoBarber',
+      email: 'equipe@orusbarber.com.br',
+      name: 'Equipe OrusBarber',
     },
   },
 } as IMailConfig;
