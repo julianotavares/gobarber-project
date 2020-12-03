@@ -1,4 +1,4 @@
-import IMailProvider from "../models/IMailprovider";
+import IMailProvider from '../models/IMailProvider';
 
 interface IMessage {
   to: string;
@@ -12,6 +12,6 @@ export default class FakeMailProvider implements IMailProvider {
     this.messages.push({
       to,
       body,
-    })
+    });
   }
 }
