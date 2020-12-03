@@ -16,49 +16,35 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaFeatures": {
-          "jsx": true
-      },
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "plugins": [
-      "react",
         "@typescript-eslint",
-        "react-hooks",
-        "@typescript-eslint/eslint-plugin",
         "prettier"
     ],
     "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}],
-      "react-hooks/exhaustive-deps": "warn",
+      "no-underscore-dangle": "off",
+      "prettier/prettier": "error",
+      "class-methods-use-this": "off",
+      "@typescript-eslint/camelcase": "off",
       "no-useless-constructor": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
-      "import/prefer-default-export": "off",
-      "camelcase": "off",
-      "@typescript-eslint/ban-types": "off",
+      "import/no-duplicates": "off",
       "@typescript-eslint/no-unused-vars": ["error", {
         "argsIgnorePattern": "_"
       }],
-      "@typescript-eslint/interface-name-prefix": ["error",
-        {
-          "prefixWithI": "always"
-          }
-        ],
+      "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
       "import/extensions": [
         "error",
         "ignorePackages",
         {
-          "ts": "never",
-          "tsx": "never"
+          "ts": "never"
         }
-     ],
-     "prettier/prettier": "error"
+      ]
     },
     "settings": {
       "import/resolver": {
         "typescript": {}
       }
     }
-}
+  }
