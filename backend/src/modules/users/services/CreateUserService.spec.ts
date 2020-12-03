@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUsersRepository from '../repositories/fake/FakeUserRepository';
+import FakeUsersRepository from '../repositories/fakes/FakeUserRepository';
 import CreateUserService from './CreateUserService';
 
 describe('CreateUser', () => {

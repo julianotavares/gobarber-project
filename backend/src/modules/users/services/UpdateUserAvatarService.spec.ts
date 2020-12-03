@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
-import FakeUsersRepository from '../repositories/fake/FakeUserRepository';
+import FakeUsersRepository from '../repositories/fakes/FakeUserRepository';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 
 describe('UpdateUserAvatar', () => {
