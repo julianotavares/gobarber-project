@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -15,8 +14,6 @@ export default class ForgotPasswordController {
     await sendForgotPasswordEmail.execute({
       email,
     });
-
-    delete user.password;
 
     return response.status(204).json();
   }
