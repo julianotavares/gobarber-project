@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useRef, useCallback } from 'react';
 import { FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
@@ -37,7 +38,7 @@ const SignIn: React.FC = () => {
         const schema = Yup.object().shape({
           password: Yup.string().required('Senha obrigatória'),
           password_confirmation: Yup.string().oneOf(
-            [Yup.ref('password'), null],
+            [Yup.ref('password')],
             'Confirmação incorreta',
           ),
         });
