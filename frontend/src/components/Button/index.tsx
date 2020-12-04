@@ -11,4 +11,5 @@ const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
     {loading ? 'Carregando...' : children}
   </Container>
 );
+
 export default Button;
