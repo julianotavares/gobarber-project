@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useCallback } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
@@ -37,14 +36,15 @@ const SignIn: React.FC = () => {
 
         const schema = Yup.object().shape({
           email: Yup.string()
-            .required('Email obrigatório')
-            .email('Digite um email válido'),
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
           password: Yup.string().required('Senha obrigatória'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
+
         await signIn({
           email: data.email,
           password: data.password,
@@ -54,10 +54,12 @@ const SignIn: React.FC = () => {
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
+
           formRef.current?.setErrors(errors);
 
           return;
         }
+
         addToast({
           type: 'error',
           title: 'Erro na autenticação',
@@ -67,6 +69,7 @@ const SignIn: React.FC = () => {
     },
     [signIn, addToast, history],
   );
+
   return (
     <Container>
       <Content>
@@ -74,10 +77,9 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu login</h1>
+            <h1>Faça seu logon</h1>
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
-
             <Input
               name="password"
               icon={FiLock}
@@ -96,6 +98,7 @@ const SignIn: React.FC = () => {
           </Link>
         </AnimationContainer>
       </Content>
+
       <Background />
     </Container>
   );

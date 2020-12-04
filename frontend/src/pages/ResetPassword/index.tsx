@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useCallback } from 'react';
 import { FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
@@ -39,7 +37,7 @@ const SignIn: React.FC = () => {
         const schema = Yup.object().shape({
           password: Yup.string().required('Senha obrigatória'),
           password_confirmation: Yup.string().oneOf(
-            [Yup.ref('password')],
+            [Yup.ref('password'), null],
             'Confirmação incorreta',
           ),
         });
@@ -65,19 +63,22 @@ const SignIn: React.FC = () => {
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
+
           formRef.current?.setErrors(errors);
 
           return;
         }
+
         addToast({
           type: 'error',
           title: 'Erro ao resetar senha',
-          description: 'Ocorreu um erro ao resetar sua senha.',
+          description: 'Ocorreu um erro ao resetar sua senha, tente novamente.',
         });
       }
     },
     [addToast, history, location.search],
   );
+
   return (
     <Container>
       <Content>
@@ -91,20 +92,21 @@ const SignIn: React.FC = () => {
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Nova Senha"
+              placeholder="Nova senha"
             />
 
             <Input
               name="password_confirmation"
               icon={FiLock}
               type="password"
-              placeholder="Confirmar Senha"
+              placeholder="Confirmação da senha"
             />
 
             <Button type="submit">Alterar senha</Button>
           </Form>
         </AnimationContainer>
       </Content>
+
       <Background />
     </Container>
   );

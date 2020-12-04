@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import GlobalStyles from './styles/global';
+import GlobalStyle from './styles/global';
 
 import AppProvider from './hooks';
 
@@ -13,7 +13,8 @@ const App: React.FC = () => (
       <Routes />
     </AppProvider>
 
-    <GlobalStyles />
+    <GlobalStyle />
   </Router>
 );
+
 export default App;
