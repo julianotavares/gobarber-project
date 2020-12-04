@@ -1,14 +1,15 @@
 /* eslint-disable camelcase */
 import React, { useCallback, useRef, ChangeEvent } from 'react';
-import { FiMail, FiUser, FiLock, FiCamera, FiArrowLeft } from 'react-icons/fi';
-import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
+import { FiMail, FiLock, FiUser, FiCamera, FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { useHistory, Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
+import { useAuth } from '../../hooks/auth';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -16,9 +17,8 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, AvatarInput } from './styles';
-import { useAuth } from '../../hooks/auth';
 
-interface ProfileFormData {
+interface IProfileData {
   name: string;
   email: string;
   old_password: string;
@@ -34,14 +34,14 @@ const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
 
   const handleSubmit = useCallback(
-    async (data: ProfileFormData) => {
+    async (data: IProfileData) => {
       try {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
           email: Yup.string()
-            .required('E-mail obrigatório')
+            .required('Email obrigatário')
             .email('Digite um e-mail válido'),
           old_password: Yup.string(),
           password: Yup.string().when('old_password', {
@@ -73,18 +73,16 @@ const Profile: React.FC = () => {
         const formData = {
           name,
           email,
-          ...(old_password
-            ? {
-                old_password,
-                password,
-                password_confirmation,
-              }
-            : {}),
+          ...(old_password && {
+            old_password,
+            password,
+            password_confirmation,
+          }),
         };
 
         const response = await api.put('/profile', formData);
 
-        updateUser(response.data.user);
+        updateUser(response.data);
 
         history.push('/dashboard');
 
@@ -114,18 +112,18 @@ const Profile: React.FC = () => {
   );
 
   const handleAvatarChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    async (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
         const data = new FormData();
 
         data.append('avatar', e.target.files[0]);
 
-        api.patch('/users/avatar', data).then(response => {
+        await api.patch('/users/avatar', data).then(response => {
           updateUser(response.data);
 
           addToast({
             type: 'success',
-            title: 'Avatar atualizado!',
+            title: 'Avatar atualizado com sucesso!',
           });
         });
       }
@@ -146,14 +144,21 @@ const Profile: React.FC = () => {
       <Content>
         <Form
           ref={formRef}
+          onSubmit={handleSubmit}
           initialData={{
             name: user.name,
             email: user.email,
           }}
-          onSubmit={handleSubmit}
         >
           <AvatarInput>
-            <img src={user.avatar_url} alt={user.name} />
+            {user.avatar_url ? (
+              <img src={user.avatar_url} alt={user.name} />
+            ) : (
+              <img
+                src={`https://avatar.oxro.io/avatar?name=${user.name}`}
+                alt={user.name}
+              />
+            )}
             <label htmlFor="avatar">
               <FiCamera />
 
@@ -161,34 +166,35 @@ const Profile: React.FC = () => {
             </label>
           </AvatarInput>
 
-          <h1>Meu perfil</h1>
+          <h1>Meu Perfil</h1>
 
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="email" icon={FiMail} placeholder="E-mail" />
+          <section>
+            <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input name="email" icon={FiMail} placeholder="E-mail" />
+          </section>
 
-          <Input
-            containerStyle={{ marginTop: 24 }}
-            name="old_password"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha atual"
-          />
+          <section>
+            <Input
+              name="old_password"
+              icon={FiLock}
+              type="password"
+              placeholder="Senha atual"
+            />
+            <Input
+              name="password"
+              icon={FiLock}
+              type="password"
+              placeholder="Nova senha"
+            />
+            <Input
+              name="password_confirmation"
+              icon={FiLock}
+              type="password"
+              placeholder="Confirmar senha"
+            />
+          </section>
 
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Nova senha"
-          />
-
-          <Input
-            name="password_confirmation"
-            icon={FiLock}
-            type="password"
-            placeholder="Confirmar senha"
-          />
-
-          <Button type="submit">Confirmar mudanças</Button>
+          <Button type="submit">Atualizar perfil</Button>
         </Form>
       </Content>
     </Container>

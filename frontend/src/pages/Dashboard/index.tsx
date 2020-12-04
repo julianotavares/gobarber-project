@@ -138,7 +138,6 @@ const Dashboard: React.FC = () => {
       isAfter(parseISO(appointment.date), new Date()),
     );
   }, [appointments]);
-
   return (
     <Container>
       <Header>
@@ -146,7 +145,15 @@ const Dashboard: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Profile>
-            <img src={user.avatar_url} alt={user.name} />
+            {/* <img src={user.avatar_url} alt={user.name} /> */}
+            {user.avatar_url ? (
+              <img src={user.avatar_url} alt={user.name} />
+            ) : (
+              <img
+                src={`https://avatar.oxro.io/avatar?name=${user.name}`}
+                alt={user.name}
+              />
+            )}
             <div>
               <span>Bem-vindo,</span>
               <Link to="/profile">
