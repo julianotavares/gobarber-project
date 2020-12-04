@@ -1,19 +1,19 @@
-/* eslint-disable class-methods-use-this */
-import path from 'path';
-import fs from 'fs';
-import uploadConfig from '@config/upload';
+// import path from 'path';
+// import fs from 'fs';
+// import uploadConfig from '@config/upload';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-
-import User from '@modules/users/infra/typeorm/entities/User';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
+
+import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
   avatarFilename: string;
 }
+
 @injectable()
 class UpdateUserAvatarService {
   constructor(
@@ -28,7 +28,7 @@ class UpdateUserAvatarService {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('Only authenticated users can change avatar', 401);
+      throw new AppError('Only authenticated users can change avatar.', 401);
     }
 
     if (user.avatar) {

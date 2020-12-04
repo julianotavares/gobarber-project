@@ -5,7 +5,7 @@ import aws, { S3 } from 'aws-sdk';
 import uploadConfig from '@config/upload';
 import IStorageProvider from '../models/IStorageProvider';
 
-class DiskStorageProvider implements IStorageProvider {
+class S3StorageProvider implements IStorageProvider {
   private client: S3;
 
   constructor() {
@@ -20,7 +20,7 @@ class DiskStorageProvider implements IStorageProvider {
     const ContentType = mime.getType(originalPath);
 
     if (!ContentType) {
-      throw new Error('File not found');
+      throw new Error('File not found.');
     }
 
     const fileContent = await fs.promises.readFile(originalPath);
@@ -32,9 +32,9 @@ class DiskStorageProvider implements IStorageProvider {
         ACL: 'public-read',
         Body: fileContent,
         ContentType,
+        ContentDisposition: `inline; filename=${file}`,
       })
       .promise();
-
     await fs.promises.unlink(originalPath);
 
     return file;
@@ -50,4 +50,4 @@ class DiskStorageProvider implements IStorageProvider {
   }
 }
 
-export default DiskStorageProvider;
+export default S3StorageProvider;
