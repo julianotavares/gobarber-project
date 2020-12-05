@@ -66,6 +66,7 @@
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "highlight.js": "^10.4.1",
     "jest": "^25.5.4",
     "prettier": "^2.0.4",
     "ts-jest": "^25.4.0",
