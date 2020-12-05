@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import Icon from "react-native-vector-icons/Feather";
-import { format } from "date-fns";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
+import { format } from 'date-fns';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
-import api from "../../services/api";
-import { useAuth } from "../../hooks/auth";
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 import {
   Container,
   Header,
@@ -29,7 +29,7 @@ import {
   HourText,
   CreateAppointmentButton,
   CreateAppointmentButtonText,
-} from "./styles";
+} from './styles';
 
 export interface Provider {
   id: string;
@@ -53,7 +53,7 @@ const AppointmentDatePicker: React.FC = () => {
   const params = route.params as RouteParams;
 
   const [selectedProvider, setSelectedProvider] = useState<string>(
-    params.providerId
+    params.providerId,
   );
 
   const minimumDate = useMemo(() => {
@@ -73,7 +73,7 @@ const AppointmentDatePicker: React.FC = () => {
   const [availability, setAvailability] = useState<AvailabilityItem[]>([]);
 
   useEffect(() => {
-    api.get("providers").then((response) => {
+    api.get('providers').then((response) => {
       setProviders(response.data);
     });
   }, []);
@@ -104,16 +104,16 @@ const AppointmentDatePicker: React.FC = () => {
       date.setHours(selectedHour);
       date.setMinutes(0);
 
-      await api.post("appointments", {
+      await api.post('appointments', {
         provider_id: selectedProvider,
         date,
       });
 
-      navigation.navigate("AppointmentCreated", { date: date.getTime() });
+      navigation.navigate('AppointmentCreated', { date: date.getTime() });
     } catch (err) {
       Alert.alert(
-        "Erro ao criar agendamento",
-        "Ocorreu um erro ao tentar criar o agendamento, tente novamente!"
+        'Erro ao criar agendamento',
+        'Ocorreu um erro ao tentar criar o agendamento, tente novamente!',
       );
     }
   }, [selectedProvider, selectedDate, selectedHour, navigation]);
@@ -123,7 +123,7 @@ const AppointmentDatePicker: React.FC = () => {
       .filter(({ hour }) => hour < 12)
       .map(({ hour, available }) => ({
         hour,
-        hourFormatted: format(new Date().setHours(hour), "HH:00"),
+        hourFormatted: format(new Date().setHours(hour), 'HH:00'),
         available,
       }));
   }, [availability]);
@@ -133,7 +133,7 @@ const AppointmentDatePicker: React.FC = () => {
       .filter(({ hour }) => hour >= 12)
       .map(({ hour, available }) => ({
         hour,
-        hourFormatted: format(new Date().setHours(hour), "HH:00"),
+        hourFormatted: format(new Date().setHours(hour), 'HH:00'),
         available,
       }));
   }, [availability]);
@@ -219,7 +219,7 @@ const AppointmentDatePicker: React.FC = () => {
                       {hourFormatted}
                     </HourText>
                   </Hour>
-                )
+                ),
               )}
             </SectionContent>
           </Section>
