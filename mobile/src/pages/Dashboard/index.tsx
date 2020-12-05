@@ -1,11 +1,9 @@
-/* eslint-disable camelcase */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Icon from "react-native-vector-icons/Feather";
 
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../../hooks/auth";
-
 import api from "../../services/api";
-
+import { useAuth } from "../../hooks/auth";
 import {
   Container,
   Header,
@@ -14,6 +12,13 @@ import {
   ProfileButton,
   UserAvatar,
   ProvidersList,
+  ProvidersListTitle,
+  ProviderContainer,
+  ProviderAvatar,
+  ProviderInfo,
+  ProviderName,
+  ProviderMeta,
+  ProviderMetaText,
 } from "./styles";
 
 export interface Provider {
@@ -23,19 +28,22 @@ export interface Provider {
 }
 
 const Dashboard: React.FC = () => {
-  const [providers, setProviders] = useState<Provider[]>([]);
   const { signOut, user } = useAuth();
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
+  const [providers, setProviders] = useState<Provider[]>([]);
 
   useEffect(() => {
     api.get("providers").then((response) => {
       setProviders(response.data);
     });
-  });
+  }, []);
 
-  const navigateToProfile = useCallback(() => {
-    navigate("Profile");
-  }, [navigate]);
+  const handleSelectProvider = useCallback(
+    (providerId: string) => {
+      navigation.navigate("AppointmentDatePicker", { providerId });
+    },
+    [navigation]
+  );
 
   return (
     <Container>
@@ -45,7 +53,7 @@ const Dashboard: React.FC = () => {
           <UserName>{user.name}</UserName>
         </HeaderTitle>
 
-        <ProfileButton onPress={navigateToProfile}>
+        <ProfileButton onPress={() => navigation.navigate("Profile")}>
           <UserAvatar source={{ uri: user.avatar_url }} />
         </ProfileButton>
       </Header>
@@ -53,7 +61,26 @@ const Dashboard: React.FC = () => {
       <ProvidersList
         data={providers}
         keyExtractor={(provider) => provider.id}
-        renderItem={({ item }) => <UserName>{item.name}</UserName>}
+        ListHeaderComponent={
+          <ProvidersListTitle>Cabelereiros</ProvidersListTitle>
+        }
+        renderItem={({ item: provider }) => (
+          <ProviderContainer onPress={() => handleSelectProvider(provider.id)}>
+            <ProviderAvatar source={{ uri: provider.avatar_url }} />
+
+            <ProviderInfo>
+              <ProviderName>{provider.name}</ProviderName>
+              <ProviderMeta>
+                <Icon name="calendar" size={14} color="#ff9000" />
+                <ProviderMetaText>Segunda à sexta</ProviderMetaText>
+              </ProviderMeta>
+              <ProviderMeta>
+                <Icon name="clock" size={14} color="#ff9000" />
+                <ProviderMetaText>8h às 18h</ProviderMetaText>
+              </ProviderMeta>
+            </ProviderInfo>
+          </ProviderContainer>
+        )}
       />
     </Container>
   );
