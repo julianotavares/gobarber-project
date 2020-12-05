@@ -6,9 +6,9 @@ import React, {
   useState,
   useContext,
   useEffect,
-} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import api from '../services/api';
+} from "react";
+import AsyncStorage from "@react-native-community/async-storage";
+import api from "../services/api";
 
 interface User {
   id: string;
@@ -42,11 +42,13 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadStorageData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet([
-        '@GoBarber:token',
-        '@GoBarber:user',
+        "@GoBarber:token",
+        "@GoBarber:user",
       ]);
 
       if (token[1] && user[1]) {
+        api.defaults.headers.authorization = `Bearer ${token[1]}`;
+
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
 
@@ -57,7 +59,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/sessions', {
+    const response = await api.post("/sessions", {
       email,
       password,
     });
@@ -65,15 +67,17 @@ const AuthProvider: React.FC = ({ children }) => {
     const { token, user } = response.data;
 
     await AsyncStorage.multiSet([
-      ['@GoBarber:token', token],
-      ['@GoBarber:user', JSON.stringify(user)],
+      ["@GoBarber:token", token],
+      ["@GoBarber:user", JSON.stringify(user)],
     ]);
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ token, user });
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@GoBarber:user', '@GoBarber:token']);
+    await AsyncStorage.multiRemove(["@GoBarber:user", "@GoBarber:token"]);
 
     setData({} as AuthState);
   }, []);
@@ -89,7 +93,7 @@ function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an Authprovider');
+    throw new Error("useAuth must be used within an Authprovider");
   }
 
   return context;
