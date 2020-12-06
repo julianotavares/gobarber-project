@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ValidationError } from 'yup';
 
 interface Errors {

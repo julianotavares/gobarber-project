@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-redeclare */
 /* eslint-disable camelcase */
 /* eslint-disable import/no-duplicates */
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { isToday, format, parseISO, isAfter } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
-
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-
-import { FiPower, FiClock } from 'react-icons/fi';
+import { isToday, isAfter, format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import { Link } from 'react-router-dom';
+import { FiPower, FiClock } from 'react-icons/fi';
+
+import { useAuth } from '../../hooks/auth';
+
+import api from '../../services/api';
+
 import {
   Container,
   Header,
@@ -23,16 +27,14 @@ import {
   Calendar,
 } from './styles';
 
-import logoImg from '../../assets/logo.svg';
-import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
+import logo from '../../assets/logo.svg';
 
-interface MonthAvailabilityItem {
+interface IMonthAvailabilityItem {
   day: number;
   available: boolean;
 }
 
-interface Appointment {
+interface IAppointment {
   id: string;
   date: string;
   hourFormatted: string;
@@ -43,26 +45,15 @@ interface Appointment {
 }
 
 const Dashboard: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { signOut, user } = useAuth();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const [monthAvailability, setMonthAvailability] = useState<
-    MonthAvailabilityItem[]
+    IMonthAvailabilityItem[]
   >([]);
-
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-
-  const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
-    if (modifiers.available && !modifiers.disabled) {
-      setSelectedDate(day);
-    }
-  }, []);
-
-  const handleMonthChange = useCallback((month: Date) => {
-    setCurrentMonth(month);
-  }, []);
+  const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
   useEffect(() => {
     api
@@ -79,7 +70,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api
-      .get<Appointment[]>('/appointments/me', {
+      .get<IAppointment[]>('/appointments/me', {
         params: {
           year: selectedDate.getFullYear(),
           month: selectedDate.getMonth() + 1,
@@ -87,16 +78,24 @@ const Dashboard: React.FC = () => {
         },
       })
       .then(response => {
-        const appointmentsFormatted = response.data.map(appointment => {
-          return {
-            ...appointment,
-            hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
-          };
-        });
+        const appointmentsFormatted = response.data.map(appointment => ({
+          ...appointment,
+          hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
+        }));
 
         setAppointments(appointmentsFormatted);
       });
   }, [selectedDate]);
+
+  const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
+    if (modifiers.available && !modifiers.disabled) {
+      setSelectedDate(day);
+    }
+  }, []);
+
+  const handleMonthChange = useCallback((month: Date) => {
+    setCurrentMonth(month);
+  }, []);
 
   const disabledDays = useMemo(() => {
     const dates = monthAvailability
@@ -111,14 +110,25 @@ const Dashboard: React.FC = () => {
     return dates;
   }, [currentMonth, monthAvailability]);
 
-  const selectedDateAsText = useMemo(() => {
-    return format(selectedDate, "'Dia' dd 'de' MMMM", {
+  const checkIfIsToday = useMemo(() => {
+    if (isToday(selectedDate)) {
+      return true;
+    }
+    return false;
+  }, [selectedDate]);
+
+  const formatSelectedDate = useMemo(() => {
+    return format(selectedDate, "'Dia' dd 'de' MMMM ", {
       locale: ptBR,
     });
   }, [selectedDate]);
 
-  const selectedWeekDay = useMemo(() => {
-    return format(selectedDate, 'cccc', { locale: ptBR });
+  const formatSelectedWeekDay = useMemo(() => {
+    const weekDay = format(selectedDate, 'cccc', {
+      locale: ptBR,
+    });
+
+    return `${weekDay.charAt(0).toUpperCase() + weekDay.slice(1)}-feira`;
   }, [selectedDate]);
 
   const morningAppointments = useMemo(() => {
@@ -138,14 +148,14 @@ const Dashboard: React.FC = () => {
       isAfter(parseISO(appointment.date), new Date()),
     );
   }, [appointments]);
+
   return (
     <Container>
       <Header>
         <HeaderContent>
-          <img src={logoImg} alt="GoBarber" />
+          <img src={logo} alt="GoBarber" />
 
           <Profile>
-            {/* <img src={user.avatar_url} alt={user.name} /> */}
             {user.avatar_url ? (
               <img src={user.avatar_url} alt={user.name} />
             ) : (
@@ -172,19 +182,26 @@ const Dashboard: React.FC = () => {
         <Schedule>
           <h1>Horários agendados</h1>
           <p>
-            {isToday(selectedDate) && <span>Hoje</span>}
-            <span>{selectedDateAsText}</span>
-            <span>{selectedWeekDay}</span>
+            {checkIfIsToday && <span>Hoje</span>}
+            <span>{formatSelectedDate}</span>
+            <span>{formatSelectedWeekDay}</span>
           </p>
 
-          {isToday(selectedDate) && nextAppointment && (
+          {checkIfIsToday && nextAppointment && (
             <NextAppointment>
               <strong>Agendamento a seguir</strong>
               <div>
-                <img
-                  src={nextAppointment.user.avatar_url}
-                  alt={nextAppointment.user.name}
-                />
+                {nextAppointment.user.avatar_url ? (
+                  <img
+                    src={`https://avatar.oxro.io/avatar?name=${nextAppointment.user.name}`}
+                    alt={nextAppointment.user.name}
+                  />
+                ) : (
+                  <img
+                    src={`https://avatar.oxro.io/avatar?name=${nextAppointment.user.name}`}
+                    alt={nextAppointment.user.name}
+                  />
+                )}
 
                 <strong>{nextAppointment.user.name}</strong>
                 <span>
@@ -201,19 +218,24 @@ const Dashboard: React.FC = () => {
             {morningAppointments.length === 0 && (
               <p>Nenhum agendamento neste período</p>
             )}
-
             {morningAppointments.map(appointment => (
               <Appointment key={appointment.id}>
                 <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
+                  <FiClock /> {appointment.hourFormatted}
                 </span>
 
                 <div>
-                  <img
-                    src={appointment.user.avatar_url}
-                    alt={appointment.user.name}
-                  />
+                  {appointment.user.avatar_url ? (
+                    <img
+                      src={appointment.user.avatar_url}
+                      alt={appointment.user.name}
+                    />
+                  ) : (
+                    <img
+                      src={`https://avatar.oxro.io/avatar?name=${appointment.user.name}`}
+                      alt={appointment.user.name}
+                    />
+                  )}
 
                   <strong>{appointment.user.name}</strong>
                 </div>
@@ -227,19 +249,24 @@ const Dashboard: React.FC = () => {
             {afternoonAppointments.length === 0 && (
               <p>Nenhum agendamento neste período</p>
             )}
-
             {afternoonAppointments.map(appointment => (
               <Appointment key={appointment.id}>
                 <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
+                  <FiClock /> {appointment.hourFormatted}
                 </span>
 
                 <div>
-                  <img
-                    src={appointment.user.avatar_url}
-                    alt={appointment.user.name}
-                  />
+                  {appointment.user.avatar_url ? (
+                    <img
+                      src={appointment.user.avatar_url}
+                      alt={appointment.user.name}
+                    />
+                  ) : (
+                    <img
+                      src={`https://avatar.oxro.io/avatar?name=${appointment.user.name}`}
+                      alt={appointment.user.name}
+                    />
+                  )}
 
                   <strong>{appointment.user.name}</strong>
                 </div>
@@ -255,15 +282,14 @@ const Dashboard: React.FC = () => {
             modifiers={{
               available: { daysOfWeek: [1, 2, 3, 4, 5] },
             }}
-            onMonthChange={handleMonthChange}
             selectedDays={selectedDate}
             onDayClick={handleDateChange}
+            onMonthChange={handleMonthChange}
             months={[
               'Janeiro',
               'Fevereiro',
               'Março',
               'Abril',
-              'Maio',
               'Junho',
               'Julho',
               'Agosto',

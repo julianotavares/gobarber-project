@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/ban-types */
 import React, {
   createContext,
   useCallback,
@@ -12,8 +10,8 @@ import api from "../services/api";
 
 interface User {
   id: string;
-  name: string;
   email: string;
+  name: string;
   avatar_url: string;
 }
 
@@ -33,6 +31,7 @@ interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
+
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
@@ -40,7 +39,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadStorageData(): Promise<void> {
+    async function loadStoragedData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet([
         "@GoBarber:token",
         "@GoBarber:user",
@@ -55,11 +54,11 @@ const AuthProvider: React.FC = ({ children }) => {
       setLoading(false);
     }
 
-    loadStorageData();
+    loadStoragedData();
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post("/sessions", {
+    const response = await api.post("sessions", {
       email,
       password,
     });
@@ -71,7 +70,7 @@ const AuthProvider: React.FC = ({ children }) => {
       ["@GoBarber:user", JSON.stringify(user)],
     ]);
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+    api.defaults.headers.authorization = `Bearer ${token[1]}`;
 
     setData({ token, user });
   }, []);
@@ -83,7 +82,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut, loading }}>
+    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
@@ -93,7 +92,7 @@ function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used within an Authprovider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
 
   return context;

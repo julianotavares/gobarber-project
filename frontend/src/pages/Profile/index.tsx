@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable camelcase */
 import React, { useCallback, useRef, ChangeEvent } from 'react';
 import { Form } from '@unform/web';
@@ -112,18 +113,18 @@ const Profile: React.FC = () => {
   );
 
   const handleAvatarChange = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
         const data = new FormData();
 
         data.append('avatar', e.target.files[0]);
 
-        await api.patch('/users/avatar', data).then(response => {
+        api.patch('/users/avatar', data).then(response => {
           updateUser(response.data);
 
           addToast({
             type: 'success',
-            title: 'Avatar atualizado com sucesso!',
+            title: 'Avatar atualizado',
           });
         });
       }
