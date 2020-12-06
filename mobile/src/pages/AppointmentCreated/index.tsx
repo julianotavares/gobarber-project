@@ -1,45 +1,43 @@
-import React, { useMemo, useCallback } from "react";
-import Icon from "react-native-vector-icons/Feather";
+import React, { useCallback, useMemo } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { format } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
-
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   Container,
   Title,
   Description,
   OkButton,
   OkButtonText,
-} from "./styles";
+} from './styles';
 
-interface RouteParams {
+interface IRouteParams {
   date: number;
 }
 
 const AppointmentCreated: React.FC = () => {
-  const route = useRoute();
-  const navigation = useNavigation();
-  const params = route.params as RouteParams;
+  const { reset } = useNavigation();
+  const { params } = useRoute();
 
-  const formattedDate = useMemo(() => {
-    return format(
-      params.date,
-      "EEEE', dia' dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
-      { locale: ptBR }
-    );
-  }, [params.date]);
+  const { date } = params as IRouteParams;
 
-  const handleOk = useCallback(() => {
-    navigation.reset({
-      index: 0,
+  const handleOkPressed = useCallback(() => {
+    reset({
       routes: [
         {
-          name: "Dashboard",
+          name: 'Dashboard',
         },
       ],
+      index: 0,
     });
-  }, []);
+  }, [reset]);
+
+  const formattedDate = useMemo(() => {
+    return format(date, "EEEE', dia' dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'", {
+      locale: ptBR,
+    });
+  }, [date]);
 
   return (
     <Container>
@@ -48,8 +46,8 @@ const AppointmentCreated: React.FC = () => {
       <Title>Agendamento concluído</Title>
       <Description>{formattedDate}</Description>
 
-      <OkButton onPress={handleOk}>
-        <OkButtonText>Ok</OkButtonText>
+      <OkButton onPress={handleOkPressed}>
+        <OkButtonText>OK</OkButtonText>
       </OkButton>
     </Container>
   );

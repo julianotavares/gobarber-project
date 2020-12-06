@@ -1,88 +1,129 @@
-import React, { useState, useEffect, useCallback } from "react";
-import Icon from "react-native-vector-icons/Feather";
+/* eslint-disable camelcase */
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Feather';
 
-import { useNavigation } from "@react-navigation/native";
-import api from "../../services/api";
-import { useAuth } from "../../hooks/auth";
-import {
-  Container,
-  Header,
-  HeaderTitle,
-  UserName,
-  ProfileButton,
-  UserAvatar,
-  ProvidersList,
-  ProvidersListTitle,
-  ProviderContainer,
-  ProviderAvatar,
-  ProviderInfo,
-  ProviderName,
-  ProviderMeta,
-  ProviderMetaText,
-} from "./styles";
+import { View } from 'react-native';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
-export interface Provider {
+import * as S from './styles';
+
+export interface IProvider {
   id: string;
   name: string;
   avatar_url: string;
+  nameInitials?: string;
 }
 
 const Dashboard: React.FC = () => {
-  const { signOut, user } = useAuth();
-  const navigation = useNavigation();
-  const [providers, setProviders] = useState<Provider[]>([]);
+  const [providers, setProviders] = useState<IProvider[]>([]);
+  const { user, signOut } = useAuth();
+  const { navigate } = useNavigation();
+
+  const navigateToProfile = useCallback(() => {
+    navigate('Profile');
+  }, [navigate]);
+
+  const handleSignOut = useCallback(() => {
+    signOut();
+  }, [signOut]);
+
+  const navigateToCreateAppointment = useCallback(
+    (providerId: string) => {
+      navigate('CreateAppointment', { providerId });
+    },
+    [navigate],
+  );
+
+  const nameInitials = useMemo(() => {
+    return user.name
+      .split(' ')
+      .map((name) => name.charAt(0).toUpperCase())
+      .join('')
+      .substring(0, 2);
+  }, [user.name]);
 
   useEffect(() => {
-    api.get("providers").then((response) => {
-      setProviders(response.data);
+    api.get<IProvider[]>('providers').then((response) => {
+      setProviders(
+        response.data.map((provider) =>
+          provider.avatar_url
+            ? provider
+            : {
+                ...provider,
+                nameInitials: provider.name
+                  .split(' ')
+                  .map((name) => name.charAt(0).toUpperCase())
+                  .join('')
+                  .substring(0, 2),
+              },
+        ),
+      );
     });
   }, []);
 
-  const handleSelectProvider = useCallback(
-    (providerId: string) => {
-      navigation.navigate("AppointmentDatePicker", { providerId });
-    },
-    [navigation]
-  );
-
   return (
-    <Container>
-      <Header>
-        <HeaderTitle>
-          Bem vindo, {"\n"}
-          <UserName>{user.name}</UserName>
-        </HeaderTitle>
+    <S.Container>
+      <S.Header>
+        <S.HeaderTitle>
+          Bem vindo, {'\n'}
+          <S.UserName>{user.name}</S.UserName>
+        </S.HeaderTitle>
 
-        <ProfileButton onPress={() => navigation.navigate("Profile")}>
-          <UserAvatar source={{ uri: user.avatar_url }} />
-        </ProfileButton>
-      </Header>
+        <S.ProfileButton onPress={navigateToProfile}>
+          {user.avatar_url ? (
+            <S.UserAvatar source={{ uri: user.avatar_url }} />
+          ) : (
+            <S.UserInitialsContainer>
+              <S.UserInitials>{nameInitials}</S.UserInitials>
+            </S.UserInitialsContainer>
+          )}
+        </S.ProfileButton>
 
-      <ProvidersList
+        <S.SignOutButton onPress={handleSignOut}>
+          <Icon name="log-out" color="#ff9000" size={20} />
+        </S.SignOutButton>
+      </S.Header>
+
+      <S.ProvidersList
         data={providers}
         keyExtractor={(provider) => provider.id}
+        ListFooterComponent={<View style={{ marginBottom: 32 }} />}
         ListHeaderComponent={
-          <ProvidersListTitle>Cabelereiros</ProvidersListTitle>
+          <S.ProvidersListTitle>Cabeleireiros</S.ProvidersListTitle>
         }
         renderItem={({ item: provider }) => (
-          <ProviderContainer onPress={() => handleSelectProvider(provider.id)}>
-            <ProviderAvatar source={{ uri: provider.avatar_url }} />
+          <S.ProviderContainer
+            onPress={() => {
+              navigateToCreateAppointment(provider.id);
+            }}
+          >
+            {provider.avatar_url ? (
+              <S.ProviderAvatar source={{ uri: provider.avatar_url }} />
+            ) : (
+              <S.ProviderInitialsContainer>
+                <S.ProviderInitials>{provider.nameInitials}</S.ProviderInitials>
+              </S.ProviderInitialsContainer>
+            )}
 
-            <ProviderInfo>
-              <ProviderName>{provider.name}</ProviderName>
-              <ProviderMeta>
+            <S.ProviderInfo>
+              <S.ProviderName>{provider.name}</S.ProviderName>
+
+              <S.ProviderMeta>
                 <Icon name="calendar" size={14} color="#ff9000" />
-                <ProviderMetaText>Segunda à sexta</ProviderMetaText>
-              </ProviderMeta>
-              <ProviderMeta>
+                <S.ProviderMetaText>segunda à sexta</S.ProviderMetaText>
+              </S.ProviderMeta>
+
+              <S.ProviderMeta>
                 <Icon name="clock" size={14} color="#ff9000" />
-                <ProviderMetaText>8h às 18h</ProviderMetaText>
-              </ProviderMeta>
-            </ProviderInfo>
-          </ProviderContainer>
+                <S.ProviderMetaText>8h às 18h</S.ProviderMetaText>
+              </S.ProviderMeta>
+            </S.ProviderInfo>
+          </S.ProviderContainer>
         )}
       />
-    </Container>
+    </S.Container>
   );
 };
 

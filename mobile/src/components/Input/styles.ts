@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components/native";
-import FeatherIcon from "react-native-vector-icons/Feather";
+import styled, { css } from 'styled-components/native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 interface ContainerProps {
   isFocused: boolean;
@@ -17,13 +17,13 @@ export const Container = styled.View<ContainerProps>`
   border-color: #232129;
   flex-direction: row;
   align-items: center;
-  ${(props) =>
-    props.isErrored &&
+  ${({ isErrored }) =>
+    isErrored &&
     css`
       border-color: #c53030;
     `}
-  ${(props) =>
-    props.isFocused &&
+  ${({ isFocused }) =>
+    isFocused &&
     css`
       border-color: #ff9000;
     `}
@@ -32,8 +32,8 @@ export const Container = styled.View<ContainerProps>`
 export const TextInput = styled.TextInput`
   flex: 1;
   color: #fff;
-  font-size: 18px;
-  font-family: "RobotoSlab-Regular";
+  font-size: 16px;
+  font-family: 'RobotoSlab-Regular';
 `;
 
 export const Icon = styled(FeatherIcon)`
