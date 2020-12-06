@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -6,21 +6,21 @@ import {
   Platform,
   TextInput,
   Alert,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Form } from "@unform/mobile";
-import { FormHandles } from "@unform/core";
-import * as Yup from "yup";
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
-import { useAuth } from "../../hooks/auth";
-import api from "../../services/api";
+import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
 
-import getValidationErrors from "../../utils/getValidationErrors";
+import getValidationErrors from '../../utils/getValidationErrors';
 
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-import { Container, Title, Avatar } from "./styles";
+import { Container, Title, Avatar } from './styles';
 
 interface ProfileFormData {
   name: string;
@@ -43,23 +43,23 @@ const Profile: React.FC = () => {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
-        name: Yup.string().required("Nome obrigatório"),
+        name: Yup.string().required('Nome obrigatório'),
         email: Yup.string()
-          .required("E-mail obrigatório")
-          .email("Digite um e-mail válido"),
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
         old_password: Yup.string(),
-        password: Yup.string().when("old_password", {
+        password: Yup.string().when('old_password', {
           is: (val) => !!val.length,
-          then: Yup.string().required("Campo obrigatório"),
+          then: Yup.string().required('Campo obrigatório'),
           otherwise: Yup.string(),
         }),
         password_confirmation: Yup.string()
-          .when("old_password", {
+          .when('old_password', {
             is: (val) => !!val.length,
-            then: Yup.string().required("Campo obrigatório"),
+            then: Yup.string().required('Campo obrigatório'),
             otherwise: Yup.string(),
           })
-          .oneOf([Yup.ref("password"), null], "Confirmação incorreta"),
+          .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
       });
 
       await schema.validate(data, {
@@ -69,8 +69,8 @@ const Profile: React.FC = () => {
       console.log(data);
 
       Alert.alert(
-        "Perfil atualizado com sucesso!",
-        "As informações do perfil foram atualizadas."
+        'Perfil atualizado com sucesso!',
+        'As informações do perfil foram atualizadas.',
       );
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -82,8 +82,8 @@ const Profile: React.FC = () => {
       }
 
       Alert.alert(
-        "Erro no cadastro",
-        "Ocorreu um erro ao fazer cadastro, tente novamente."
+        'Erro no cadastro',
+        'Ocorreu um erro ao fazer cadastro, tente novamente.',
       );
     }
   }, []);
@@ -92,7 +92,7 @@ const Profile: React.FC = () => {
     <>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
       >
         <ScrollView
