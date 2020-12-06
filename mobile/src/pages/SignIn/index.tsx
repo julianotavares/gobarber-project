@@ -1,61 +1,67 @@
-import React, { useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Image,
   View,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
   TextInput,
   Alert,
-} from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
-import * as Yup from "yup";
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
 
-import { Form } from "@unform/mobile";
-import { FormHandles } from "@unform/core";
+import { FormHandles } from '@unform/core';
 
-import { useAuth } from "../../hooks/auth";
+import { useAuth } from '../../hooks/auth';
 
-import getValidationErrors from "../../utils/getValidationErrors";
+import logo from '../../assets/logo.png';
 
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import getValidationErrors from '../../utils/getValidationErrors';
 
-import logoImg from "../../assets/logo.png";
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 import {
   Container,
   Title,
+  UnForm,
   ForgotPassword,
   ForgotPasswordText,
   CreateAccountButton,
   CreateAccountButtonText,
-} from "./styles";
+} from './styles';
 
-interface SignInFormData {
+interface ISignInFormData {
   email: string;
   password: string;
 }
 
 const SignIn: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
-  const passwordInputRef = useRef<TextInput>(null);
-
+  const [isHidden, setIsHidden] = useState(false);
   const navigation = useNavigation();
 
   const { signIn } = useAuth();
 
+  const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
+  const keyboardDidShow = useCallback((): void => setIsHidden(true), []);
+
+  const keyboardDidHide = useCallback((): void => setIsHidden(false), []);
+
   const handleSignIn = useCallback(
-    async (data: SignInFormData) => {
+    async (data: ISignInFormData) => {
       try {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
           email: Yup.string()
-            .required("E-mail obrigatório")
-            .email("Digite um e-mail válido"),
-          password: Yup.string().required("Senha obrigatória"),
+            .email('Digite um e-mail válido')
+            .required('E-mail obrigatório'),
+          password: Yup.string().required('Senha obrigatória'),
         });
 
         await schema.validate(data, {
@@ -70,27 +76,36 @@ const SignIn: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
-          console.log(errors);
-
           formRef.current?.setErrors(errors);
 
           return;
         }
 
         Alert.alert(
-          "Erro na autenticação",
-          "Ocorreu um erro ao fazer login, cheque as credenciais."
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, cheque as credenciais',
         );
       }
     },
-    [signIn]
+    [signIn],
   );
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+      Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+    };
+  }, []);
 
   return (
     <>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
       >
         <ScrollView
@@ -98,13 +113,13 @@ const SignIn: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
-            <Image source={logoImg} />
+            <Image source={logo} />
 
             <View>
               <Title>Faça seu logon</Title>
             </View>
 
-            <Form ref={formRef} onSubmit={handleSignIn}>
+            <UnForm ref={formRef} onSubmit={handleSignIn}>
               <Input
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -119,10 +134,10 @@ const SignIn: React.FC = () => {
               />
 
               <Input
-                ref={passwordInputRef}
                 name="password"
                 icon="lock"
                 placeholder="Senha"
+                ref={passwordInputRef}
                 secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={() => {
@@ -137,19 +152,21 @@ const SignIn: React.FC = () => {
               >
                 Entrar
               </Button>
-            </Form>
+            </UnForm>
 
-            <ForgotPassword onPress={() => {}}>
+            <ForgotPassword>
               <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
             </ForgotPassword>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton onPress={() => navigation.navigate("SignUp")}>
-        <Icon name="log-in" size={20} color="#ff9000" />
-        <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
-      </CreateAccountButton>
+      {!isHidden && (
+        <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
+          <Icon name="log-in" size={20} color="#ff9000" />
+          <CreateAccountButtonText>Criar conta</CreateAccountButtonText>
+        </CreateAccountButton>
+      )}
     </>
   );
 };
