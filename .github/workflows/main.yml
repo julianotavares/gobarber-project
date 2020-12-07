@@ -10,6 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+        # desativa o processamento do fluxo de trabalho do comando 
+        echo ":: stop-comandos ::` echo -n $ {{github.token}} | sha256sum | head -c 64` " 
+
+        # log de saída não confiável 
+        echo" saída não confiável " 
+
+        # enable workflow processamento do comando de 
+        eco "::` echo -n $ {{github.token}} | sha256sum | head -c 64` :: "
     steps:
     - uses: actions/checkout@v2
 
