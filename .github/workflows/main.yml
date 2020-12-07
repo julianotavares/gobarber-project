@@ -33,6 +33,10 @@ jobs:
           ${{ runner.os }}-yarn-
           
     # Instalar as dependencias NPM/YARN
+    - name: Display the path
+    - run: echo $PATH
+      shell: bash
+    
     - run: yarn install
       working-directory: client
 
