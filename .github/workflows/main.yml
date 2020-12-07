@@ -39,7 +39,7 @@ jobs:
     # Executar a build
     - name: Run build
       run: yarn build
-      working-directory: ./home/deploy/app/orusbarber-backend
+      working-directory: "/home/deploy/app/orusbarber-backend"
      
     # Copiar código para dentro da Digital Ocean
     - name: Copy dist to Digital Ocean
