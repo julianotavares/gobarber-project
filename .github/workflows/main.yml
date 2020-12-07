@@ -33,13 +33,11 @@ jobs:
           ${{ runner.os }}-yarn-
           
     # Instalar as dependencias NPM/YARN
-    - name: Install dependencies
-      run: yarn
+    - run: yarn install
+      working-directory: client
 
-    # Executar a build
-    - name: Run build
-      run: yarn build
-      working-directory: "/home/deploy/app/orusbarber-backend"
+    - run: yarn build
+      working-directory: client
      
     # Copiar código para dentro da Digital Ocean
     - name: Copy dist to Digital Ocean
