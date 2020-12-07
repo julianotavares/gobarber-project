@@ -10,15 +10,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-        # desativa o processamento do fluxo de trabalho do comando 
-        echo ":: stop-comandos ::` echo -n $ {{github.token}} | sha256sum | head -c 64` " 
-
-        # log de saída não confiável 
-        echo" saída não confiável " 
-
-        # enable workflow processamento do comando de 
-        eco "::` echo -n $ {{github.token}} | sha256sum | head -c 64` :: "
     steps:
+    - name: log untrusted output
+      run: |
+
+        echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`"
+
+        echo "untrusted output"
+
+        echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"
+        
     - uses: actions/checkout@v2
 
     - name: Setup Node.js environment
