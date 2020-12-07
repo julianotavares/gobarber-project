@@ -49,7 +49,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
         source: ".,!node_modules"
-        target: "~/app/orusbarber-backend"
+        target: "/home/deploy/app/orusbarber-backend"
       
      # Executar yarn na Digital Ocean
     - name: Run production scripts
