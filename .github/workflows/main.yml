@@ -37,11 +37,11 @@ jobs:
     - run: echo $PATH
       shell: bash
     
+    # Yarn Install
     - run: yarn install
-      working-directory: client
-
+      
+    # Yarn build
     - run: yarn build
-      working-directory: client
      
     # Copiar código para dentro da Digital Ocean
     - name: Copy dist to Digital Ocean
@@ -51,7 +51,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        source: ".,!node_modules"
+        source: "dist"
         target: "/home/deploy/app/orusbarber-backend"
       
      # Executar yarn na Digital Ocean
