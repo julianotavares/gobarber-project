@@ -149,6 +149,8 @@ const Dashboard: React.FC = () => {
     );
   }, [appointments]);
 
+  console.log(user.avatar_url);
+
   return (
     <Container>
       <Header>
