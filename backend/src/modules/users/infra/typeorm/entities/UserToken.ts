@@ -2,9 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  Generated,
   CreateDateColumn,
   UpdateDateColumn,
-  Generated,
 } from 'typeorm';
 
 @Entity('user_tokens')

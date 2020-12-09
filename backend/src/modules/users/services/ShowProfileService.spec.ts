@@ -13,7 +13,7 @@ describe('UpdateProfile', () => {
     showProfile = new ShowProfileService(fakeUsersRepository);
   });
 
-  it('should be able show the profile', async () => {
+  it('should be able to show the profile', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -28,7 +28,7 @@ describe('UpdateProfile', () => {
     expect(profile.email).toBe('johndoe@example.com');
   });
 
-  it('should not be able show the profile from non-existing user', async () => {
+  it('should not be able to show the profile from non-existing user', async () => {
     expect(
       showProfile.execute({
         user_id: 'non-existing-user-id',

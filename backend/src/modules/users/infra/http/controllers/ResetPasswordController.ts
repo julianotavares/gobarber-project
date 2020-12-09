@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -11,8 +10,8 @@ export default class ResetPasswordController {
     const resetPassword = container.resolve(ResetPasswordService);
 
     await resetPassword.execute({
-      token,
       password,
+      token,
     });
 
     return response.status(204).json();

@@ -1,10 +1,10 @@
-import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProvidersService from './ListProvidersService';
 
 let fakeUsersRepository: FakeUsersRepository;
-let fakeCacheProvider: FakeCacheProvider;
 let listProviders: ListProvidersService;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('ListProviders', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('ListProviders', () => {
     );
   });
 
-  it('should be able to list the providers', async () => {
+  it('should be able to list all providers', async () => {
     const user1 = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -25,8 +25,8 @@ describe('ListProviders', () => {
     });
 
     const user2 = await fakeUsersRepository.create({
-      name: 'John Trê',
-      email: 'johntre@example.com',
+      name: 'John Tré',
+      email: 'johntré@example.com',
       password: '123456',
     });
 

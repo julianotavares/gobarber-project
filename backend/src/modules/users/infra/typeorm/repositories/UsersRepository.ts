@@ -4,7 +4,7 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
 
-import User from '../entities/User';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
@@ -28,14 +28,14 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findAllProviders({
-    except_user_id,
+    expect_user_id,
   }: IFindAllProvidersDTO): Promise<User[]> {
     let users: User[];
 
-    if (except_user_id) {
+    if (expect_user_id) {
       users = await this.ormRepository.find({
         where: {
-          id: Not(except_user_id),
+          id: Not(expect_user_id),
         },
       });
     } else {
@@ -46,11 +46,11 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {
-    const appointment = this.ormRepository.create(userData);
+    const user = this.ormRepository.create(userData);
 
-    await this.ormRepository.save(appointment);
+    await this.ormRepository.save(user);
 
-    return appointment;
+    return user;
   }
 
   public async save(user: User): Promise<User> {

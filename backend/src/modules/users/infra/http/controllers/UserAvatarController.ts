@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
@@ -11,10 +10,8 @@ export default class UserAvatarController {
 
     const user = await updateUserAvatar.execute({
       user_id: request.user.id,
-      avatarFilename: request.file.filename,
+      avatar_filename: request.file.filename,
     });
-
-    delete user.password;
 
     return response.json(classToClass(user));
   }

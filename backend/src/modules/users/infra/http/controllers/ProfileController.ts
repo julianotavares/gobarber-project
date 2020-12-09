@@ -5,15 +5,13 @@ import { classToClass } from 'class-transformer';
 import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
 
-export default class Profilecontroller {
+export default class ProfileController {
   public async show(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
 
-    const showProfile = container.resolve(ShowProfileService);
+    const showProfileService = container.resolve(ShowProfileService);
 
-    const user = await showProfile.execute({ user_id });
-
-    delete user.password;
+    const user = await showProfileService.execute({ user_id });
 
     return response.json(classToClass(user));
   }
@@ -22,9 +20,9 @@ export default class Profilecontroller {
     const user_id = request.user.id;
     const { name, email, old_password, password } = request.body;
 
-    const updateProfile = container.resolve(UpdateProfileService);
+    const updateUser = container.resolve(UpdateProfileService);
 
-    const user = await updateProfile.execute({
+    const user = await updateUser.execute({
       user_id,
       name,
       email,
@@ -32,7 +30,6 @@ export default class Profilecontroller {
       password,
     });
 
-    delete user.password;
     return response.json(classToClass(user));
   }
 }

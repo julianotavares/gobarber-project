@@ -1,9 +1,9 @@
-/* eslint-disable class-methods-use-this */
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+
 import User from '@modules/users/infra/typeorm/entities/User';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
@@ -30,15 +30,15 @@ class CreateUserService {
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {
-      throw new AppError('E-mail address already used!');
+      throw new AppError('E-mail already exists');
     }
 
-    const hashedPassword = await this.hashProvider.generateHash(password);
+    const passwordHash = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
       email,
-      password: hashedPassword,
+      password: passwordHash,
     });
 
     await this.cacheProvider.invalidatePrefix('providers-list');

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class AddAvatarFieldToUsers1605875798500 implements MigrationInterface {

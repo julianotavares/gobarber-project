@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { Platform, Alert } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';

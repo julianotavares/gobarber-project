@@ -2,15 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
+
 import AppError from '@shared/errors/AppError';
 
 interface ITokenPayload {
   iat: number;
-  exp: number;
+  ext: number;
   sub: string;
 }
 
-export default function ensureAuthenticated(
+export default function auth(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -34,6 +35,6 @@ export default function ensureAuthenticated(
 
     return next();
   } catch (err) {
-    throw new AppError('Invalid JWT token0', 401);
+    throw new AppError('Invalid JWT token', 401);
   }
 }
