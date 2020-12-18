@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "orusbarber-tvOS.app"
-               BlueprintName = "orusbarber-tvOS"
-               ReferencedContainer = "container:orusbarber.xcodeproj">
+               BuildableName = "appgobarber-tvOS.app"
+               BlueprintName = "appgobarber-tvOS"
+               ReferencedContainer = "container:appgobarber.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "orusbarber-tvOSTests.xctest"
-               BlueprintName = "orusbarber-tvOSTests"
-               ReferencedContainer = "container:orusbarber.xcodeproj">
+               BuildableName = "appgobarber-tvOSTests.xctest"
+               BlueprintName = "appgobarber-tvOSTests"
+               ReferencedContainer = "container:appgobarber.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "orusbarber-tvOS.app"
-            BlueprintName = "orusbarber-tvOS"
-            ReferencedContainer = "container:orusbarber.xcodeproj">
+            BuildableName = "appgobarber-tvOS.app"
+            BlueprintName = "appgobarber-tvOS"
+            ReferencedContainer = "container:appgobarber.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "orusbarber-tvOS.app"
-            BlueprintName = "orusbarber-tvOS"
-            ReferencedContainer = "container:orusbarber.xcodeproj">
+            BuildableName = "appgobarber-tvOS.app"
+            BlueprintName = "appgobarber-tvOS"
+            ReferencedContainer = "container:appgobarber.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
