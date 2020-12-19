@@ -10,6 +10,7 @@
 <p align="center">Neste repositório, você vai encontrar uma aplicação completa, desenvolvida durante o<br/>Bootcamp GoStack 11.0 da Rocketseat 🎓 (2020). <br/> A aplicação inclui o Backend, Frontend e Mobile com Node.JS, Express, React.JS, React Native e TypeScript.</p>
 
 <p align="center">
+  <a href="#coffee-back-end">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#coffee-back-end">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-front-end">Frontend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#iphone-mobile">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -48,7 +49,7 @@ $ yarn dev:server
 # O servidor inciará na porta:3333 - acesse <http://localhost:3333>
 ```
 
-## Frontend
+# :computer: Frontend
 
 Após clonar o repositório, entre na pasta `frontend` e instale todas as dependências utilizando o comando:
 ```bash
@@ -62,7 +63,7 @@ yarn start
 ```
 <br>
 
-### Mobile 
+# :iphone-mobile: Mobile 
 
 Após clonar o repositório, entre na pasta `mobile` e instale todas as dependências utilizando o comando:
 ```bash
