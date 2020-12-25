@@ -27,6 +27,10 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
+# Informações adicionais
+
+Este projeto foi desenvolvido em Typescript utilizando metodologia ágil, DDD e TDD, React Hooks, styled-components, SOLID e agilidade prática de código limpo.
+
 ### Banco de dados
 
 Com o Docker já instalado e rodando em sua máquina, crie as imagens do PostgreSQL, MongoDB e Redis da aplicação, conforme os dados mostrados dentro da pasta backend no arquivo `ormconfig.example.json`.
@@ -94,6 +98,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
   
+  
+# Colabore
+
+Você pode colaborar com este projeto, dê um Fork no mesmo e envia a sua pull request com uma nova feature/correção de bugs e etc...
+Será muito bem vindo!
+ 
 # :memo: License
 
 This project is under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
