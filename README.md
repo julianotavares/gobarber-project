@@ -10,8 +10,8 @@
 <p align="center">Neste repositório, você vai encontrar uma aplicação completa, desenvolvida durante o<br/>Bootcamp GoStack 11.0 da Rocketseat 🎓 (2020). <br/> A aplicação inclui o Backend, Frontend e Mobile com Node.JS, Express, React.JS, React Native e TypeScript.</p>
 
 <p align="center">
-  <a href="#build-setup">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#coffee-back-end">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#coffee-build-setup">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#gear-backend">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-frontend">Frontend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#iphone-mobile">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
@@ -31,7 +31,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 Com o Docker já instalado e rodando em sua máquina, crie as imagens do PostgreSQL, MongoDB e Redis da aplicação, conforme os dados mostrados dentro da pasta backend no arquivo `ormconfig.example.json`.
 
-### 🎲 Rodando o Back End (servidor)
+# :gear: Backend
 
 ```bash
 # Clone este repositório
