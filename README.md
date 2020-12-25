@@ -10,14 +10,14 @@
 <p align="center">Neste repositório, você vai encontrar uma aplicação completa, desenvolvida durante o<br/>Bootcamp GoStack 11.0 da Rocketseat 🎓 (2020). <br/> A aplicação inclui o Backend, Frontend e Mobile com Node.JS, Express, React.JS, React Native e TypeScript.</p>
 
 <p align="center">
-  <a href="#coffee-back-end">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#build-setup">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#coffee-back-end">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-frontend">Frontend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#iphone-mobile">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
-# Build Setup
+# :coffee: Build Setup
 
 Para rodar o projeto, você precisa: [Node.js](https://nodejs.org/) and [Docker](https://docs.docker.com/install/)  para rodar localmente.
 
