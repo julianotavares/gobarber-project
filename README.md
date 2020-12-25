@@ -13,7 +13,7 @@
   <a href="#coffee-back-end">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#coffee-back-end">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-frontend">Frontend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#iphone-mobile">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#iphone">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
@@ -63,7 +63,7 @@ yarn start
 ```
 <br>
 
-# :iphone-mobile: Mobile 
+# :iphone: Mobile 
 
 Após clonar o repositório, entre na pasta `mobile` e instale todas as dependências utilizando o comando:
 ```bash
